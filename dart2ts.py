@@ -18,8 +18,10 @@ def main(
         except Exception as e:
             print(f"Error converting")
             continue
+        file_name = converted_class.file.split("/")[-1].split(".")[0]
+        file_name = file_name.replace("_", "-")
         with open(
-            f"{output_folder}/{converted_class.file.split('/')[-1].split('.')[0]}.ts",
+            f"{output_folder}/{file_name}.ts",
             "w",
         ) as file:
             file.write(converted_class.code)
