@@ -9,13 +9,15 @@ def main(
     class_info_list = ExtractEntities.extract_all_entities_names(
         ExtractEntities.get_all_dart_files()
     )
-    print(class_info_list)
-    class_info_list = [
-        DataClassGenerator.generate_data_class(class_info)
-        for class_info in class_info_list
-    ]
-    for converted_class in class_info_list:
-        print(converted_class.code)
+
+    for class_info in class_info_list:
+        if class_info is None:
+            print("Found None")
+        try:
+            converted_class = DataClassGenerator.generate_data_class(class_info)
+        except Exception as e:
+            print(f"Error converting")
+            continue
         with open(
             f"{output_folder}/{converted_class.file.split('/')[-1].split('.')[0]}.ts",
             "w",
